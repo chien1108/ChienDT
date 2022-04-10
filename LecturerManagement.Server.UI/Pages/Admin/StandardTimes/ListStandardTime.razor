@@ -1,0 +1,60 @@
+﻿@page "/Admin/ListStandardTime"
+@inject IConfiguration Configuration
+@using LecturerManagement.Server.UI.Components
+<h3>StandardTimeManagement</h3>
+
+@if (ListStandardTimeFromApi == null)
+{
+    <LoadingIndicator></LoadingIndicator>
+}
+else
+{
+    <div class="row mt-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Standard Time Hours
+                    </th>
+                    <th>Description</th>
+                    <th>Create Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ListStandardTimeFromApi)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.StandardHours</td>
+                        <td>@item.Description</td>
+                        <td>@item.CreatedDate.ToString(Configuration["DateTimeFormat"])</td>
+                        <td><StatusLabel Status="item.Status"></StatusLabel></td>
+                        <td>
+                            <a href="/standardtimeDetail/@item.Id" class="btn btn-primary">Detail</a>
+                            <a href="/standardtimeEdit/@item.Id" class="btn btn-warning">Edit</a>
+                            <button class="btn btn-danger" @onclick="()=> OnDeleteStandardTime(item.Id)">Delete</button>
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+            @*<tfoot>
+                    <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage"></Pagination>
+                </tfoot>*@
+        </table>
+    </div>
+    <Confirmation ConfirmationMessage="Are you sure to delete?"
+                  ConfirmationTitle="Delete Standard Time"
+                  @ref="DeleteConfirmation"
+                  ConfirmationChanged="OnConfirmDeleteStandardTime">
+
+    </Confirmation>
+
+
+}

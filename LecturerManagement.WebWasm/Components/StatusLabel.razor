@@ -1,0 +1,22 @@
+﻿@using LecturerManagement.WebWasm.Services.Base
+@switch (Status)
+{
+    case Status._1:
+        <span class="badge badge-success">Active</span>
+        break;
+    case Status._0:
+        <span class="badge badge-warning">Delete)</span>
+        break;
+    case Status._2:
+<span class="badge badge-secondary">Working</span>
+        break;
+    case Status._3:
+<span class="badge badge-dark">Retired</span>
+        break;
+}
+
+
+@code {
+    [Parameter]
+    public Status Status { set; get; }
+}
